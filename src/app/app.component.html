@@ -4,16 +4,17 @@
       <ion-title>QuickPark</ion-title>
     </ion-toolbar>
   </ion-header>
+
   <ion-content>
     <ion-list>
 
       <!-- Publicar mi estacionamiento -->
-      <ion-item button routerLink="/publicar-estacionamiento">
+      <ion-item button routerLink="/parking">
         <ion-icon name="bookmark-outline" slot="start"></ion-icon>
         <ion-label>Publicar mi estacionamiento</ion-label>
       </ion-item>
 
-      <!-- Mi auto -->
+      <!-- Mis autos -->
       <ion-item button routerLink="/add">
         <ion-icon name="car-outline" slot="start"></ion-icon>
         <ion-label>Mis autos</ion-label>
@@ -28,9 +29,21 @@
       <!-- Reservas -->
       <ion-item button routerLink="/reservas">
         <ion-icon name="calendar-number-outline" slot="start"></ion-icon>
-        <ion-label >Reservas</ion-label>
+        <ion-label>Reservas</ion-label>
       </ion-item>
+
     </ion-list>
+
+    <!-- Sección de Perfil -->
+    <ion-item button routerLink="/perfil" lines="none">
+      <ion-avatar slot="start">
+        <img src="assets/img/avatar.png" alt="User Avatar"> <!-- Imagen de perfil -->
+      </ion-avatar>
+      <ion-label>
+        <h2>Nombre de Usuario</h2> <!-- Nombre del usuario -->
+        <p>Mi perfil</p>
+      </ion-label>
+    </ion-item>
   </ion-content>
 </ion-menu>
 

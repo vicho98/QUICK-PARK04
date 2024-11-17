@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Publicar Estacionamiento</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form (ngSubmit)="saveParking()">
+    <ion-item>
+      <ion-label position="stacked">Nombre del Dueño</ion-label>
+      <ion-input [(ngModel)]="parking.nombre" name="nombre"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Tipo de Estacionamiento</ion-label>
+      <ion-select [(ngModel)]="parking.tipo" name="tipo" placeholder="Selecciona un tipo">
+        <ion-select-option value="Casa">Casa</ion-select-option>
+        <ion-select-option value="Depto">Depto</ion-select-option>
+        <ion-select-option value="Calle">Calle</ion-select-option>
+        <ion-select-option value="Pasaje Cerrado">Pasaje Cerrado</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Disponibilidad</ion-label>
+      <ion-select [(ngModel)]="parking.disponibilidad" name="disponibilidad">
+        <ion-select-option value="Disponible">Disponible</ion-select-option>
+        <ion-select-option value="No Disponible">No Disponible</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Descripción</ion-label>
+      <ion-textarea [(ngModel)]="parking.descripcion" name="descripcion"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Subir Imagen</ion-label>
+      <input type="file" (change)="onImageSelected($event)">
+    </ion-item>
+
+    <ion-button expand="block" type="submit" color="primary">Publicar Estacionamiento</ion-button>
+  </form>
+
+  <ion-list>
+    <ion-item *ngFor="let parking of parkings">
+      <ion-label>
+        <h2>{{ parking.nombre }}</h2>
+        <p>{{ parking.tipo }} - {{ parking.disponibilidad }} - {{ parking.descripcion }}</p>
+        <img *ngIf="parking.imageUrl" [src]="parking.imageUrl" alt="Imagen Estacionamiento" style="width: 100%; height: auto;">
+      </ion-label>
+      <ion-button fill="clear" color="danger" (click)="deleteParking(parking.id)">Eliminar</ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>
