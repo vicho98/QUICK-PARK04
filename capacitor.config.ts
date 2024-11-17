@@ -1,9 +1,7 @@
-import type { CapacitorConfig } from '@capacitor/cli';
-
-const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'quick-park03',
-  webDir: 'www'
+const config = {
+  plugins: {
+    GoogleMaps: {
+      apiKey: 'AIzaSyBio7Yn2EAQdiLq7yHR8h9DJ3pjAnuM9Gk',
+    },
+  },
 };
-
-export default config;

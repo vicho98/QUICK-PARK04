@@ -1,3 +1,38 @@
-<ion-app>
-  <ion-router-outlet></ion-router-outlet>
-</ion-app>
+<ion-menu contentId="main-content">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>QuickPark</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+
+      <!-- Publicar mi estacionamiento -->
+      <ion-item button routerLink="/publicar-estacionamiento">
+        <ion-icon name="bookmark-outline" slot="start"></ion-icon>
+        <ion-label>Publicar mi estacionamiento</ion-label>
+      </ion-item>
+
+      <!-- Mi auto -->
+      <ion-item button routerLink="/add">
+        <ion-icon name="car-outline" slot="start"></ion-icon>
+        <ion-label>Mis autos</ion-label>
+      </ion-item>
+
+      <!-- Buscar estacionamiento -->
+      <ion-item button routerLink="/search">
+        <ion-icon name="map-outline" slot="start"></ion-icon>
+        <ion-label>Buscar estacionamiento</ion-label>
+      </ion-item>
+
+      <!-- Reservas -->
+      <ion-item button routerLink="/reservas">
+        <ion-icon name="calendar-number-outline" slot="start"></ion-icon>
+        <ion-label >Reservas</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<!-- Main content of the app -->
+<ion-router-outlet id="main-content"></ion-router-outlet>

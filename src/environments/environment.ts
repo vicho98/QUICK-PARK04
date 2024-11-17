@@ -3,7 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  FIREBASE_CONFIG: {
+    apiKey: "AIzaSyAu_SJzmvLb-n2LJlz516Uf_o4wyNrzfJo",
+    authDomain: "quick-park01.firebaseapp.com",
+    projectId: "quick-park01",
+    storageBucket: "quick-park01.firebasestorage.app",
+    messagingSenderId: "589906117663",
+    appId: "1:589906117663:web:92f69d196496bbe65f012a"
+  },
+  googleMapsApiKey: "AIzaSyBio7Yn2EAQdiLq7yHR8h9DJ3pjAnuM9Gk"  // Añade tu clave de API de Google Maps aquí
 };
 
 /*
