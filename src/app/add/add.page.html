@@ -1,13 +1,67 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
+<ion-header>
+  <ion-toolbar color="primary">
     <ion-title>Agrega tus autos</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Agrega tus autos !</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <form (ngSubmit)="saveCar()">
+    <ion-item>
+      <ion-label position="stacked">Marca</ion-label>
+      <ion-input [(ngModel)]="car.marca" name="marca"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Modelo</ion-label>
+      <ion-input [(ngModel)]="car.modelo" name="modelo"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Patente</ion-label>
+      <ion-input [(ngModel)]="car.patente" name="patente"></ion-input>
+    </ion-item>
+
+    <!-- Selector de tipo de vehículo -->
+    <ion-item>
+      <ion-label position="stacked">Tipo</ion-label>
+      <ion-select [(ngModel)]="car.tipo" name="tipo" placeholder="Selecciona un tipo de vehículo">
+        <ion-select-option value="SUV">SUV</ion-select-option>
+        <ion-select-option value="SEDAN">SEDAN</ion-select-option>
+        <ion-select-option value="CAMIONETA">CAMIONETA</ion-select-option>
+        <ion-select-option value="CAMION">CAMION</ion-select-option>
+        <ion-select-option value="FURGON">FURGON</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Selector de color -->
+    <ion-item>
+      <ion-label position="stacked">Color</ion-label>
+      <ion-select [(ngModel)]="car.color" name="color" placeholder="Selecciona un color">
+        <ion-select-option value="rojo">Rojo</ion-select-option>
+        <ion-select-option value="azul">Azul</ion-select-option>
+        <ion-select-option value="verde">Verde</ion-select-option>
+        <ion-select-option value="negro">Negro</ion-select-option>
+        <ion-select-option value="blanco">Blanco</ion-select-option>
+        <ion-select-option value="gris">Gris</ion-select-option>
+        <ion-select-option value="amarillo">Amarillo</ion-select-option>
+        <ion-select-option value="morado">Morado</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" color="primary">Guardar Auto</ion-button>
+  </form>
+
+  <ion-list>
+    <ion-item *ngFor="let car of cars">
+      <ion-label>
+        <h2>{{ car.marca }} - {{ car.modelo }}</h2>
+        <p>{{ car.patente }} - {{ car.tipo }} - {{ car.color }}</p>
+      </ion-label>
+      <ion-button fill="clear" color="danger" (click)="deleteCar(car.id)">Eliminar</ion-button>
+    </ion-item>
+  </ion-list>
 </ion-content>
+
+
+
+
