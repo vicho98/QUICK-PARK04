@@ -1,2 +1,11 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+:root {
+    --ion-color-calm: #42a5f5; /* Color principal */
+    --ion-color-calm-rgb: 66, 165, 245;
+    --ion-color-calm-contrast: #ffffff; /* Texto sobre el color */
+    --ion-color-calm-contrast-rgb: 255, 255, 255;
+    --ion-color-calm-shade: #378ad8; /* Versión oscura */
+    --ion-color-calm-tint: #64b5f6; /* Versión clara */
+  }
+  
