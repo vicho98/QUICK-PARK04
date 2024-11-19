@@ -34,11 +34,6 @@
       <ion-textarea [(ngModel)]="parking.descripcion" name="descripcion"></ion-textarea>
     </ion-item>
 
-    <ion-item>
-      <ion-label position="stacked">Subir Imagen</ion-label>
-      <input type="file" (change)="onImageSelected($event)">
-    </ion-item>
-
     <ion-button expand="block" type="submit" color="primary">Publicar Estacionamiento</ion-button>
   </form>
 
@@ -47,9 +42,8 @@
       <ion-label>
         <h2>{{ parking.nombre }}</h2>
         <p>{{ parking.tipo }} - {{ parking.disponibilidad }} - {{ parking.descripcion }}</p>
-        <img *ngIf="parking.imageUrl" [src]="parking.imageUrl" alt="Imagen Estacionamiento" style="width: 100%; height: auto;">
       </ion-label>
-      <ion-button fill="clear" color="danger" (click)="deleteParking(parking.id)">Eliminar</ion-button>
+      <ion-button fill="clear" color="danger" (click)="deleteParking(parking)">Eliminar</ion-button>
     </ion-item>
   </ion-list>
 </ion-content>
