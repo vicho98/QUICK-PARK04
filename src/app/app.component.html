@@ -7,7 +7,6 @@
 
   <ion-content>
     <ion-list>
-
       <!-- Publicar mi estacionamiento -->
       <ion-item button routerLink="/parking">
         <ion-icon name="bookmark-outline" slot="start"></ion-icon>
@@ -31,20 +30,33 @@
         <ion-icon name="calendar-number-outline" slot="start"></ion-icon>
         <ion-label>Reservas</ion-label>
       </ion-item>
-
     </ion-list>
-
-    <!-- Sección de Perfil -->
-    <ion-item button routerLink="/perfil" lines="none">
-      <ion-avatar slot="start">
-        <img src="assets/img/avatar.png" alt="User Avatar"> <!-- Imagen de perfil -->
-      </ion-avatar>
-      <ion-label>
-        <h2>Nombre de Usuario</h2> <!-- Nombre del usuario -->
-        <p>Mi perfil</p>
-      </ion-label>
-    </ion-item>
   </ion-content>
+
+  <ion-footer>
+    <ion-list>
+      <!-- Perfil -->
+      <ion-item button routerLink="/perfil" lines="none">
+        <ion-icon name="body-outline"></ion-icon>
+        <ion-label>
+          <h2>Nombre de Usuario</h2> <!-- Nombre del usuario -->
+          <p>Mi perfil</p>
+        </ion-label>
+      </ion-item>
+
+      <!-- Términos y condiciones -->
+      <ion-item button routerLink="/terminos" lines="none">
+        <ion-icon name="document-text-outline" slot="start"></ion-icon>
+        <ion-label>Términos y condiciones</ion-label>
+      </ion-item>
+
+      <!-- Reclamos o sugerencias -->
+      <ion-item button routerLink="/reclamos" lines="none">
+        <ion-icon name="chatbubbles-outline" slot="start"></ion-icon>
+        <ion-label>Reclamos o sugerencias</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-footer>
 </ion-menu>
 
 <!-- Main content of the app -->

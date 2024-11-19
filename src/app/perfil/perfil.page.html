@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Mi Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card *ngIf="user">
+    <ion-card-content>
+      <p><strong>Nombre:</strong> {{ user.fullName }}</p>
+      <p><strong>RUT:</strong> {{ user.rut }}</p>
+      <p><strong>Teléfono:</strong> {{ user.phone }}</p>
+      <p><strong>Correo Electrónico:</strong> {{ user.email }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Mensaje si no hay datos -->
+  <div *ngIf="!user">
+    <p>No se encontraron datos del usuario.</p>
+  </div>
+</ion-content>

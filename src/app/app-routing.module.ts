@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'parking',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -30,6 +30,22 @@ const routes: Routes = [
   {
     path: 'parking',
     loadChildren: () => import('./parking/parking.module').then( m => m.ParkingPageModule)
+  },
+  {
+    path: 'perfil',
+    loadChildren: () => import('./perfil/perfil.module').then( m => m.PerfilPageModule)
+  },
+  {
+    path: 'terminos',
+    loadChildren: () => import('./terminos/terminos.module').then( m => m.TerminosPageModule)
+  },
+  {
+    path: 'reclamos',
+    loadChildren: () => import('./reclamos/reclamos.module').then( m => m.ReclamosPageModule)
+  },
+  {
+    path: 'reservas',
+    loadChildren: () => import('./reservas/reservas.module').then( m => m.ReservasPageModule)
   },
 
 ];
