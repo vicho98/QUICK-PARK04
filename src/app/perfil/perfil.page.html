@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-menu-button></ion-menu-button> <!-- Botón de menú agregado -->
     </ion-buttons>
     <ion-title>Mi Perfil</ion-title>
   </ion-toolbar>
@@ -17,8 +17,10 @@
     </ion-card-content>
   </ion-card>
 
+  <!-- Mensaje si no hay datos -->
   <div *ngIf="!user">
     <p>No se encontraron datos del usuario.</p>
   </div>
 </ion-content>
+
 
