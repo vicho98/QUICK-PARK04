@@ -1,39 +1,41 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="info">
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>Registrarse</ion-title>
+    <ion-title class="header-title">Registrarse</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
-  <ion-item>
-    <ion-label position="floating">Nombre completo</ion-label>
-    <ion-input type="text" [(ngModel)]="user.fullName" required></ion-input>
-  </ion-item>
+<ion-content [fullscreen]="true" class="register-content">
+  <div class="register-container">
+    <ion-item lines="none" class="input-item">
+      <ion-label position="floating">Nombre completo</ion-label>
+      <ion-input type="text" [(ngModel)]="user.fullName" required></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label position="floating">RUT</ion-label>
-    <ion-input type="text" [(ngModel)]="user.rut" required></ion-input>
-  </ion-item>
+    <ion-item lines="none" class="input-item">
+      <ion-label position="floating">RUT</ion-label>
+      <ion-input type="text" [(ngModel)]="user.rut" required></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label position="floating">Correo electrónico</ion-label>
-    <ion-input type="email" [(ngModel)]="user.email" required></ion-input>
-  </ion-item>
+    <ion-item lines="none" class="input-item">
+      <ion-label position="floating">Correo electrónico</ion-label>
+      <ion-input type="email" [(ngModel)]="user.email" required></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label position="floating">Número de teléfono</ion-label>
-    <ion-input type="tel" [(ngModel)]="user.phone" required></ion-input>
-  </ion-item>
+    <ion-item lines="none" class="input-item">
+      <ion-label position="floating">Número de teléfono</ion-label>
+      <ion-input type="tel" [(ngModel)]="user.phone" required></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label position="floating">Contraseña</ion-label>
-    <ion-input type="password" [(ngModel)]="user.password" required></ion-input>
-  </ion-item>
+    <ion-item lines="none" class="input-item">
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input type="password" [(ngModel)]="user.password" required></ion-input>
+    </ion-item>
 
-  <ion-button class="ion-padding" color="primary" expand="full" (click)="register(user)">
-    Registrarse
-  </ion-button>
+    <ion-button expand="block" color="primary" class="action-button" (click)="register(user)">
+      Registrarse
+    </ion-button>
+  </div>
 </ion-content>
