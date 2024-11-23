@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Información del Marcador</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ markerInfo?.title || 'Título desconocido' }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ markerInfo?.description || 'Descripción no disponible' }}</p>
+      <p><strong>Latitud:</strong> {{ markerInfo?.lat }}</p>
+      <p><strong>Longitud:</strong> {{ markerInfo?.lng }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button expand="full" (click)="dismiss()">Cerrar</ion-button>
+</ion-content>

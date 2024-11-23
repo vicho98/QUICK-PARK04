@@ -15,11 +15,13 @@ import { GoogleMapsModule } from '@angular/google-maps';
 // Importa el módulo correcto de la página de búsqueda
 import { SearchPageModule } from './search/search.module'; 
 
-// Importa el nuevo componente para el layout con menú
+// Importa el componente del modal de información
+import { MarkerInfoModalComponent } from './marker-info-modal/marker-info-modal.component'; // Asegúrate de que la ruta sea correcta
 
 @NgModule({
   declarations: [
     AppComponent,
+    MarkerInfoModalComponent,  // Agrega el componente aquí
   ],
   imports: [
     BrowserModule,
