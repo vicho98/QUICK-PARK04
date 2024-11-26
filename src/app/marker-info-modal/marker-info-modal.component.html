@@ -6,13 +6,17 @@
 
 <ion-content>
   <ion-card>
+    <ion-img [src]="markerInfo?.photoUrl || 'https://loremflickr.com/400/200/parking?random=1'" alt="Foto del estacionamiento"></ion-img>
     <ion-card-header>
       <ion-card-title>{{ markerInfo?.title || 'Título desconocido' }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p>{{ markerInfo?.description || 'Descripción no disponible' }}</p>
+      <p><strong>Descripción:</strong> {{ markerInfo?.description || 'Descripción no disponible' }}</p>
+      <p><strong>Propietario:</strong> {{ markerInfo?.owner || 'Desconocido' }}</p>
+      <p><strong>Dirección:</strong> {{ markerInfo?.address || 'Dirección no disponible' }}</p>
       <p><strong>Latitud:</strong> {{ markerInfo?.lat }}</p>
       <p><strong>Longitud:</strong> {{ markerInfo?.lng }}</p>
+      
     </ion-card-content>
   </ion-card>
 

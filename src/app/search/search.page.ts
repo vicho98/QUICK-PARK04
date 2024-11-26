@@ -1,8 +1,8 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { GoogleMap } from '@capacitor/google-maps';
 import { ModalController } from '@ionic/angular';
-import { MarkerInfoModalComponent } from '../marker-info-modal/marker-info-modal.component';  // Importar el componente modal
-import { Geolocation } from '@capacitor/geolocation';  // Importar Geolocation para obtener la ubicación
+import { MarkerInfoModalComponent } from '../marker-info-modal/marker-info-modal.component';
+import { Geolocation } from '@capacitor/geolocation';
 
 @Component({
   selector: 'app-search',
@@ -14,16 +14,16 @@ export class SearchPage implements AfterViewInit {
   markerId: string | null = null;
   circleId: string | null = null;
   randomMarkerIds: { id: string; lat: number; lng: number }[] = [];
-  currentLocation: { lat: number; lng: number } | null = null;  // Ubicación actual del usuario
+  currentLocation: { lat: number; lng: number } | null = null;
 
   constructor(private modalController: ModalController) {}
 
   async ngAfterViewInit() {
-    await this.getCurrentLocation();  // Obtener ubicación del usuario
-    await this.initMap();  // Inicializar el mapa con la ubicación obtenida
+    await this.getCurrentLocation();
+    await this.initMap();
   }
 
-  // Obtener la ubicación actual del usuario
+  // Obtiene la ubicación actual del usuario.
   async getCurrentLocation() {
     try {
       const position = await Geolocation.getCurrentPosition();
@@ -34,12 +34,12 @@ export class SearchPage implements AfterViewInit {
       console.log('Ubicación actual:', this.currentLocation);
     } catch (error) {
       console.error('Error al obtener la ubicación:', error);
-      // Si no se obtiene la ubicación, usar una predeterminada (ejemplo Santiago)
-      this.currentLocation = { lat: -33.4489, lng: -70.6693 };
+      // Usa una ubicación predeterminada en caso de error
+      this.currentLocation = { lat: -33.4489, lng: -70.6693 }; // Santiago, Chile
     }
   }
 
-  // Inicializar el mapa
+  // Inicializa el mapa centrado en la ubicación actual.
   async initMap() {
     if (!this.currentLocation) {
       console.error('No se pudo obtener la ubicación actual.');
@@ -57,73 +57,67 @@ export class SearchPage implements AfterViewInit {
       element: mapElement,
       apiKey: 'TU_API_KEY',
       config: {
-        center: this.currentLocation,  // Usar la ubicación actual del usuario
+        center: this.currentLocation,
         zoom: 12,
       },
     });
 
-    // Colocar un marcador en la ubicación actual
     await this.addCurrentLocationMarker();
 
-    // Establecer evento de clic en el mapa
+    // Configura un listener para manejar clics en el mapa.
     this.map.setOnMapClickListener((event) => {
       const { latitude, longitude } = event;
       this.handleMapClick(latitude, longitude);
     });
   }
 
-  // Colocar el marcador para la ubicación actual del usuario
+  // Añade un marcador en la ubicación actual del usuario.
   async addCurrentLocationMarker() {
     if (!this.currentLocation) return;
 
-    const markerIds = await this.map.addMarkers([{
-      coordinate: { lat: this.currentLocation.lat, lng: this.currentLocation.lng },
-      title: 'Mi ubicación actual',
-      snippet: 'Este es tu lugar actual',
-    }]);
+    const markerIds = await this.map.addMarkers([
+      {
+        coordinate: { lat: this.currentLocation.lat, lng: this.currentLocation.lng },
+        title: 'Mi ubicación actual',
+        snippet: 'Este es tu lugar actual',
+      },
+    ]);
     this.markerId = markerIds[0];
   }
 
-  // Manejar clic en el mapa
+  // Maneja los clics en el mapa, actualizando los marcadores y mostrando puntos aleatorios.
   async handleMapClick(lat: number, lng: number) {
-    if (this.markerId) {
-      await this.map.removeMarkers([this.markerId]);
-      this.markerId = null;
-    }
-    if (this.circleId) {
-      await this.map.removeCircles([this.circleId]);
-      this.circleId = null;
-    }
-    if (this.randomMarkerIds.length > 0) {
-      const idsToRemove = this.randomMarkerIds.map((marker) => marker.id);
-      await this.map.removeMarkers(idsToRemove);
-      this.randomMarkerIds = [];
-    }
+    await this.clearPreviousMarkers();
 
-    const markerIds = await this.map.addMarkers([{
-      coordinate: { lat, lng },
-      title: 'Ubicación seleccionada',
-      snippet: 'Aquí está el marcador principal',
-    }]);
+    const markerIds = await this.map.addMarkers([
+      {
+        coordinate: { lat, lng },
+        title: 'Ubicación seleccionada',
+        snippet: 'Aquí está el marcador principal',
+      },
+    ]);
     this.markerId = markerIds[0];
 
-    const circleIds = await this.map.addCircles([{
-      center: { lat, lng },
-      radius: 3000,
-      fillColor: '#FF0000',
-      strokeColor: '#FF0000',
-    }]);
+    const circleIds = await this.map.addCircles([
+      {
+        center: { lat, lng },
+        radius: 3000,
+        fillColor: '#FF0000',
+        strokeColor: '#FF0000',
+      },
+    ]);
     this.circleId = circleIds[0];
 
-    const randomCount = Math.floor(Math.random() * 5) + 1;
-    const randomPoints = this.generateRandomPoints(lat, lng, randomCount, 3000);
+    const randomPoints = this.generateRandomPoints(lat, lng, 5, 3000);
 
     for (const point of randomPoints) {
-      const randomMarkerIds = await this.map.addMarkers([{
-        coordinate: { lat: point.lat, lng: point.lng },
-        title: 'Punto aleatorio',
-        snippet: 'Haga clic para más información',
-      }]);
+      const randomMarkerIds = await this.map.addMarkers([
+        {
+          coordinate: { lat: point.lat, lng: point.lng },
+          title: 'Punto aleatorio',
+          snippet: 'Haga clic para más información',
+        },
+      ]);
       this.randomMarkerIds.push({
         id: randomMarkerIds[0],
         lat: point.lat,
@@ -131,25 +125,55 @@ export class SearchPage implements AfterViewInit {
       });
     }
 
-    // Asignar evento de clic en los marcadores aleatorios
+    // Listener para clics en los marcadores aleatorios
     this.map.setOnMarkerClickListener(async (event) => {
       const clickedMarker = this.randomMarkerIds.find((marker) => marker.id === event.markerId);
       if (clickedMarker) {
-        await this.presentMarkerInfoModal(clickedMarker.lat, clickedMarker.lng);  // Abre el modal con la información
+        await this.presentMarkerInfoModal(clickedMarker.lat, clickedMarker.lng);
       }
     });
   }
 
-  // Mostrar modal con la información del marcador
+  // Limpia los marcadores y círculos previos en el mapa.
+  async clearPreviousMarkers() {
+    if (this.markerId) {
+      await this.map.removeMarkers([this.markerId]);
+      this.markerId = null;
+    }
+
+    if (this.circleId) {
+      await this.map.removeCircles([this.circleId]);
+      this.circleId = null;
+    }
+
+    if (this.randomMarkerIds.length > 0) {
+      const idsToRemove = this.randomMarkerIds.map((marker) => marker.id);
+      await this.map.removeMarkers(idsToRemove);
+      this.randomMarkerIds = [];
+    }
+  }
+
+  // Presenta el modal con información del marcador.
   async presentMarkerInfoModal(lat: number, lng: number) {
     const modal = await this.modalController.create({
       component: MarkerInfoModalComponent,
-      componentProps: { lat, lng },
+      componentProps: {
+        lat, // Pasamos la latitud al modal
+        lng, // Pasamos la longitud al modal
+        markerInfo: {
+          title: 'Estacionamiento Cercano',
+          description: 'Espacio de estacionamiento disponible.',
+          owner: this.generateRandomOwner(),
+          address: this.generateRandomAddress(),
+          photoUrl: this.generateRandomPhoto(),
+        },
+      },
     });
     return await modal.present();
   }
+  
 
-  // Generar puntos aleatorios dentro de un radio
+  // Genera puntos aleatorios alrededor de una ubicación.
   generateRandomPoints(centerLat: number, centerLng: number, count: number, radius: number) {
     const randomPoints = [];
     for (let i = 0; i < count; i++) {
@@ -158,10 +182,32 @@ export class SearchPage implements AfterViewInit {
       const dx = distance * Math.cos(angle);
       const dy = distance * Math.sin(angle);
 
-      const lat = centerLat + (dy / 111320);
-      const lng = centerLng + (dx / (111320 * Math.cos(centerLat * (Math.PI / 180)))); 
+      const lat = centerLat + dy / 111320;
+      const lng = centerLng + dx / (111320 * Math.cos(centerLat * (Math.PI / 180)));
       randomPoints.push({ lat, lng });
     }
     return randomPoints;
+  }
+
+  // Genera un propietario aleatorio.
+  private generateRandomOwner(): string {
+    const firstNames = ['Juan', 'María', 'Carlos', 'Ana', 'Luis'];
+    const lastNames = ['Pérez', 'Gómez', 'Rodríguez', 'López', 'Hernández'];
+    return `${firstNames[Math.floor(Math.random() * firstNames.length)]} ${lastNames[Math.floor(Math.random() * lastNames.length)]}`;
+  }
+
+  // Genera una dirección aleatoria.
+  private generateRandomAddress(): string {
+    const streets = ['Av. Principal', 'Calle 123', 'Pasaje Secundario', 'Ruta 40'];
+    const numbers = Math.floor(Math.random() * 500) + 1;
+    return `${streets[Math.floor(Math.random() * streets.length)]} #${numbers}`;
+  }
+
+  // Genera una URL de foto aleatoria.
+  private generateRandomPhoto(): string {
+    const photos = [
+      'https://loremflickr.com/400/200/parking?random=1'
+    ];
+    return photos[Math.floor(Math.random() * photos.length)];
   }
 }
