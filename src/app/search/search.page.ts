@@ -102,8 +102,8 @@ export class SearchPage implements AfterViewInit {
       {
         center: { lat, lng },
         radius: 3000,
-        fillColor: '#FF0000',
-        strokeColor: '#FF0000',
+        fillColor: '#008000',
+        strokeColor: '#008000',
       },
     ]);
     this.circleId = circleIds[0];
@@ -206,7 +206,11 @@ export class SearchPage implements AfterViewInit {
   // Genera una URL de foto aleatoria.
   private generateRandomPhoto(): string {
     const photos = [
-      'https://loremflickr.com/400/200/parking?random=1'
+      'https://loremflickr.com/400/200/parking',
+      'https://loremflickr.com/400/200/garage',
+      'https://loremflickr.com/400/200/car-park',
+      'https://loremflickr.com/400/200/cars',
+      'https://loremflickr.com/400/200/vehicles',
     ];
     return photos[Math.floor(Math.random() * photos.length)];
   }

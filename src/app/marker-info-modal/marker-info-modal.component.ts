@@ -44,8 +44,8 @@ export class MarkerInfoModalComponent {
   }
 
   private generateRandomOwner(): string {
-    const firstNames = ['Juan', 'María', 'Carlos', 'Ana', 'Luis'];
-    const lastNames = ['Pérez', 'Gómez', 'Rodríguez', 'López', 'Hernández'];
+    const firstNames = ['Juan', 'María', 'Carlos', 'Ana', 'Luis','Camilo'];
+    const lastNames = ['Pérez', 'Gómez', 'Rodríguez', 'López', 'Hernández','Barra'];
     const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
     const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
     return `${firstName} ${lastName}`;
@@ -59,9 +59,14 @@ export class MarkerInfoModalComponent {
 
   private generateRandomPhoto(): string {
     const photos = [
-      'https://loremflickr.com/400/200/parking?random=1'
-      
+      'https://loremflickr.com/400/200/parking',
+      'https://loremflickr.com/400/200/garage',
+      'https://loremflickr.com/400/200/car-park',
+      'https://loremflickr.com/400/200/cars',
+      'https://loremflickr.com/400/200/vehicles',
     ];
+    
+    
     return photos[Math.floor(Math.random() * photos.length)];
   }
 }
