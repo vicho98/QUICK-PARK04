@@ -1,8 +1,5 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button> <!-- Botón de menú agregado -->
-    </ion-buttons>
     <ion-title>Publicar Estacionamiento</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -11,12 +8,12 @@
   <form (ngSubmit)="saveParking()">
     <ion-item>
       <ion-label position="stacked">Nombre del Dueño</ion-label>
-      <ion-input [(ngModel)]="parking.nombre" name="nombre"></ion-input>
+      <ion-input [(ngModel)]="parking.nombre" name="nombre" required></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Tipo de Estacionamiento</ion-label>
-      <ion-select [(ngModel)]="parking.tipo" name="tipo" placeholder="Selecciona un tipo">
+      <ion-select [(ngModel)]="parking.tipo" name="tipo" placeholder="Selecciona un tipo" required>
         <ion-select-option value="Casa">Casa</ion-select-option>
         <ion-select-option value="Depto">Depto</ion-select-option>
         <ion-select-option value="Calle">Calle</ion-select-option>
@@ -26,7 +23,7 @@
 
     <ion-item>
       <ion-label position="stacked">Disponibilidad</ion-label>
-      <ion-select [(ngModel)]="parking.disponibilidad" name="disponibilidad">
+      <ion-select [(ngModel)]="parking.disponibilidad" name="disponibilidad" required>
         <ion-select-option value="Disponible">Disponible</ion-select-option>
         <ion-select-option value="No Disponible">No Disponible</ion-select-option>
       </ion-select>
@@ -34,7 +31,12 @@
 
     <ion-item>
       <ion-label position="stacked">Descripción</ion-label>
-      <ion-textarea [(ngModel)]="parking.descripcion" name="descripcion"></ion-textarea>
+      <ion-textarea [(ngModel)]="parking.descripcion" name="descripcion" required></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Imagen (Opcional)</ion-label>
+      <input type="file" (change)="onImageSelected($event)" />
     </ion-item>
 
     <ion-button expand="block" type="submit" color="primary">Publicar Estacionamiento</ion-button>
@@ -45,10 +47,14 @@
       <ion-label>
         <h2>{{ parking.nombre }}</h2>
         <p>{{ parking.tipo }} - {{ parking.disponibilidad }} - {{ parking.descripcion }}</p>
+        <p *ngIf="parking.imageUrl">
+          <img [src]="parking.imageUrl" alt="Imagen del estacionamiento" style="max-width: 100%; height: auto;" />
+        </p>
+        <p>ID: {{ parking.id }}</p> <!-- Para depuración -->
       </ion-label>
-      <ion-button fill="clear" color="danger" (click)="deleteParking(parking)">Eliminar</ion-button>
+      <ion-button fill="clear" color="danger" (click)="deleteParking(parking.id)">
+        Eliminar
+      </ion-button>
     </ion-item>
   </ion-list>
 </ion-content>
-
-
