@@ -5,8 +5,11 @@
 </ion-header>
 
 <ion-content>
-  <!-- Información del Usuario -->
-  <ion-card>
+  <!-- Mostrar spinner mientras se cargan los datos -->
+  <ion-spinner *ngIf="isLoading"></ion-spinner>
+
+  <!-- Mostrar contenido cuando no se está cargando y no hay mensaje de error -->
+  <ion-card *ngIf="!isLoading && !errorMessage">
     <ion-card-header>
       <ion-card-title>Información del Usuario</ion-card-title>
     </ion-card-header>
@@ -18,8 +21,18 @@
     </ion-card-content>
   </ion-card>
 
+  <!-- Mostrar mensaje de error si existe -->
+  <ion-card *ngIf="errorMessage">
+    <ion-card-header>
+      <ion-card-title>Error</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ errorMessage }}</p>
+    </ion-card-content>
+  </ion-card>
+
   <!-- Lista de Autos del Usuario -->
-  <ion-card *ngIf="userCars.length > 0">
+  <ion-card *ngIf="userCars.length > 0 && !isLoading">
     <ion-card-header>
       <ion-card-title>Mis Autos</ion-card-title>
     </ion-card-header>
@@ -37,13 +50,42 @@
     </ion-card-content>
   </ion-card>
 
-  <!-- Mensaje cuando el usuario no tenga autos -->
-  <ion-card *ngIf="userCars.length === 0">
+  <!-- Mostrar mensaje cuando no haya autos -->
+  <ion-card *ngIf="userCars.length === 0 && !isLoading">
     <ion-card-header>
       <ion-card-title>No tienes autos registrados</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <p>Aún no has registrado ningún auto. Puedes agregar uno en la sección de Autos.</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Lista de Estacionamientos del Usuario -->
+  <ion-card *ngIf="userParkings.length > 0 && !isLoading">
+    <ion-card-header>
+      <ion-card-title>Mis Estacionamientos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let parking of userParkings">
+          <ion-label>
+            <h2>{{ parking.nombre }}</h2>
+            <p><strong>Tipo:</strong> {{ parking.tipo }}</p>
+            <p><strong>Disponibilidad:</strong> {{ parking.disponibilidad }}</p>
+            <p><strong>Descripción:</strong> {{ parking.descripcion }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Mostrar mensaje cuando no haya estacionamientos -->
+  <ion-card *ngIf="userParkings.length === 0 && !isLoading">
+    <ion-card-header>
+      <ion-card-title>No tienes estacionamientos registrados</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Aún no has registrado ningún estacionamiento. Puedes agregar uno en la sección de Estacionamientos.</p>
     </ion-card-content>
   </ion-card>
 </ion-content>

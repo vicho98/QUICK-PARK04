@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentReference } from '@angular/fire/compat/firestore'; // Importa DocumentReference
+import { AngularFirestore, DocumentReference } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { AngularFireAuth } from '@angular/fire/compat/auth'; // Importamos AngularFireAuth
 import { Observable, from } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 
@@ -10,30 +11,39 @@ import { switchMap, map } from 'rxjs/operators';
 export class ParkingService {
   constructor(
     private firestore: AngularFirestore,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private afAuth: AngularFireAuth // Inyectamos AngularFireAuth
   ) {}
 
   // Crear un estacionamiento con o sin imagen
   createParking(parking: any, imageFile: File | null): Observable<DocumentReference<unknown>> {
-    const parkingRef = this.firestore.collection('parking'); // Referencia a Firestore
-  
-    if (imageFile) {
-      const filePath = `parking-images/${Date.now()}_${imageFile.name}`;
-      const fileRef = this.storage.ref(filePath);
-      const task = this.storage.upload(filePath, imageFile);
-  
-      return from(task).pipe(
-        switchMap(() => fileRef.getDownloadURL()), // Obtener la URL de descarga de la imagen
-        switchMap((imageUrl: string) => {
-          parking.imageUrl = imageUrl; // Agregar la URL de la imagen al estacionamiento
-          return parkingRef.add(parking); // Guardar el estacionamiento en Firestore
-        })
-      );
-    } else {
-      return from(parkingRef.add(parking)); // Guardar sin imagen
-    }
+    return from(this.afAuth.currentUser).pipe(
+      switchMap((user) => {
+        if (!user) {
+          throw new Error('Usuario no autenticado');
+        }
+
+        parking.userId = user.uid; // Asociamos el estacionamiento al userId
+        const parkingRef = this.firestore.collection('parking');
+
+        if (imageFile) {
+          const filePath = `parking-images/${Date.now()}_${imageFile.name}`;
+          const fileRef = this.storage.ref(filePath);
+          const task = this.storage.upload(filePath, imageFile);
+
+          return from(task).pipe(
+            switchMap(() => fileRef.getDownloadURL()), // Obtener la URL de descarga de la imagen
+            switchMap((imageUrl: string) => {
+              parking.imageUrl = imageUrl; // Agregar la URL de la imagen al estacionamiento
+              return parkingRef.add(parking); // Guardar el estacionamiento en Firestore
+            })
+          );
+        } else {
+          return from(parkingRef.add(parking)); // Guardar sin imagen
+        }
+      })
+    );
   }
-  
 
   // Obtener todos los estacionamientos
   getParkings(): Observable<any[]> {
@@ -45,13 +55,32 @@ export class ParkingService {
           actions.map((a) => {
             const data = a.payload.doc.data();
             const id = a.payload.doc.id;
-
-            // Verificar que 'data' sea un objeto antes de usar spread
             if (data && typeof data === 'object') {
-              return { id, ...data }; // Combinar el ID con los datos
+              return { id, ...data };
             } else {
               console.error('Error: El dato no es un objeto', data);
-              return { id }; // Devuelve el ID si no se puede hacer el spread
+              return { id };
+            }
+          })
+        )
+      );
+  }
+
+  // Obtener estacionamientos de un usuario específico
+  getUserParkings(userId: string): Observable<any[]> {
+    return this.firestore
+      .collection('parking', (ref) => ref.where('userId', '==', userId))
+      .snapshotChanges()
+      .pipe(
+        map((actions) =>
+          actions.map((a) => {
+            const data = a.payload.doc.data();
+            const id = a.payload.doc.id;
+            if (data && typeof data === 'object') {
+              return { id, ...data };
+            } else {
+              console.error('Error: El dato no es un objeto', data);
+              return { id };
             }
           })
         )
@@ -61,8 +90,6 @@ export class ParkingService {
   // Eliminar un estacionamiento
   deleteParking(id: string): Observable<void> {
     const docRef = this.firestore.collection('parking').doc(id);
-    return from(docRef.delete()); // Eliminar el documento
+    return from(docRef.delete());
   }
 }
-
-
