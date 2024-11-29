@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/compat/auth'; // Necesitamos el auth para obtener el userId
 
 export interface Car {
   id?: string;
@@ -9,6 +10,7 @@ export interface Car {
   patente: string;
   tipo: string;
   color: string;
+  userId?: string; // Añadir userId para asociar cada auto con un usuario
 }
 
 @Injectable({
@@ -17,17 +19,32 @@ export interface Car {
 export class CarService {
   private collectionName = 'cars';
 
-  constructor(private firestore: AngularFirestore) {}
+  constructor(
+    private firestore: AngularFirestore,
+    private afAuth: AngularFireAuth // Inyectamos AngularFireAuth para obtener el usuario
+  ) {}
 
   // Crear un auto
   addCar(car: Car): Promise<void> {
-    const id = this.firestore.createId();
-    return this.firestore.collection(this.collectionName).doc(id).set({ ...car, id });
+    // Obtener el userId del usuario autenticado
+    return this.afAuth.currentUser.then(user => {
+      if (user) {
+        const id = this.firestore.createId();
+        // Asociamos el auto con el userId
+        return this.firestore.collection(this.collectionName).doc(id).set({ ...car, id, userId: user.uid });
+      }
+      throw new Error('No se pudo obtener el usuario autenticado');
+    });
   }
 
-  // Leer todos los autos
+  // Leer todos los autos del usuario (con el userId)
   getCars(): Observable<Car[]> {
     return this.firestore.collection<Car>(this.collectionName).valueChanges();
+  }
+
+  // Obtener los autos de un usuario específico
+  getUserCars(userId: string): Observable<Car[]> {
+    return this.firestore.collection<Car>(this.collectionName, ref => ref.where('userId', '==', userId)).valueChanges();
   }
 
   // Actualizar un auto

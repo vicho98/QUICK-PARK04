@@ -1,26 +1,91 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button> <!-- Botón de menú agregado -->
-    </ion-buttons>
+  <ion-toolbar>
     <ion-title>Mi Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-card *ngIf="user">
+<ion-content>
+  <!-- Mostrar spinner mientras se cargan los datos -->
+  <ion-spinner *ngIf="isLoading"></ion-spinner>
+
+  <!-- Mostrar contenido cuando no se está cargando y no hay mensaje de error -->
+  <ion-card *ngIf="!isLoading && !errorMessage">
+    <ion-card-header>
+      <ion-card-title>Información del Usuario</ion-card-title>
+    </ion-card-header>
     <ion-card-content>
-      <p><strong>Nombre:</strong> {{ user.fullName }}</p>
-      <p><strong>RUT:</strong> {{ user.rut }}</p>
-      <p><strong>Teléfono:</strong> {{ user.phone }}</p>
-      <p><strong>Correo Electrónico:</strong> {{ user.email }}</p>
+      <p><strong>Nombre:</strong> {{ userData.fullName }}</p>
+      <p><strong>RUT:</strong> {{ userData.rut }}</p>
+      <p><strong>Email:</strong> {{ userData.email }}</p>
+      <p><strong>Teléfono:</strong> {{ userData.phone }}</p>
     </ion-card-content>
   </ion-card>
 
-  <!-- Mensaje si no hay datos -->
-  <div *ngIf="!user">
-    <p>No se encontraron datos del usuario.</p>
-  </div>
+  <!-- Mostrar mensaje de error si existe -->
+  <ion-card *ngIf="errorMessage">
+    <ion-card-header>
+      <ion-card-title>Error</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ errorMessage }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Lista de Autos del Usuario -->
+  <ion-card *ngIf="userCars.length > 0 && !isLoading">
+    <ion-card-header>
+      <ion-card-title>Mis Autos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let car of userCars">
+          <ion-label>
+            <h2>{{ car.marca }} {{ car.modelo }}</h2>
+            <p><strong>Patente:</strong> {{ car.patente }}</p>
+            <p><strong>Color:</strong> {{ car.color }}</p>
+            <p><strong>Tipo:</strong> {{ car.tipo }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Mostrar mensaje cuando no haya autos -->
+  <ion-card *ngIf="userCars.length === 0 && !isLoading">
+    <ion-card-header>
+      <ion-card-title>No tienes autos registrados</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Aún no has registrado ningún auto. Puedes agregar uno en la sección de Autos.</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Lista de Estacionamientos del Usuario -->
+  <ion-card *ngIf="userParkings.length > 0 && !isLoading">
+    <ion-card-header>
+      <ion-card-title>Mis Estacionamientos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let parking of userParkings">
+          <ion-label>
+            <h2>{{ parking.nombre }}</h2>
+            <p><strong>Tipo:</strong> {{ parking.tipo }}</p>
+            <p><strong>Disponibilidad:</strong> {{ parking.disponibilidad }}</p>
+            <p><strong>Descripción:</strong> {{ parking.descripcion }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Mostrar mensaje cuando no haya estacionamientos -->
+  <ion-card *ngIf="userParkings.length === 0 && !isLoading">
+    <ion-card-header>
+      <ion-card-title>No tienes estacionamientos registrados</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Aún no has registrado ningún estacionamiento. Puedes agregar uno en la sección de Estacionamientos.</p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
-
-
