@@ -53,13 +53,26 @@ const routes: Routes = [
       import('./register/register.module').then((m) => m.RegisterPageModule),
   },
   {
+    path: 'membresia',
+    loadChildren: () =>
+      import('./membresia/membresia.module').then((m) => m.MembresiaPageModule),
+  },
+  {
+    path: 'pago-simulado',
+    loadChildren: () => import('./pago-simulado/pago-simulado.module').then(m => m.PagoSimuladoPageModule),
+  },
+  {
+    path: 'pago-confirmado',
+    loadChildren: () => import('./pago-confirmado/pago-confirmado.module').then(m => m.PagoConfirmadoPageModule),
+  },
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',
   },
   {
     path: '**',
-    redirectTo: 'login', // Ruta por defecto
+    redirectTo: 'login',
   },
 ];
 
@@ -70,3 +83,7 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
+
+
+
+
