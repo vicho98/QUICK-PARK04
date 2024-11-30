@@ -4,14 +4,16 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <form (ngSubmit)="saveParking()">
-    <ion-item>
+<ion-content class="ion-padding parking-content">
+  <form (ngSubmit)="saveParking()" class="form-container">
+    <!-- Nombre del Dueño -->
+    <ion-item class="input-item">
       <ion-label position="stacked">Nombre del Dueño</ion-label>
       <ion-input [(ngModel)]="parking.nombre" name="nombre" required></ion-input>
     </ion-item>
 
-    <ion-item>
+    <!-- Tipo de Estacionamiento -->
+    <ion-item class="input-item">
       <ion-label position="stacked">Tipo de Estacionamiento</ion-label>
       <ion-select [(ngModel)]="parking.tipo" name="tipo" placeholder="Selecciona un tipo" required>
         <ion-select-option value="Casa">Casa</ion-select-option>
@@ -21,7 +23,8 @@
       </ion-select>
     </ion-item>
 
-    <ion-item>
+    <!-- Disponibilidad -->
+    <ion-item class="input-item">
       <ion-label position="stacked">Disponibilidad</ion-label>
       <ion-select [(ngModel)]="parking.disponibilidad" name="disponibilidad" required>
         <ion-select-option value="Disponible">Disponible</ion-select-option>
@@ -29,26 +32,32 @@
       </ion-select>
     </ion-item>
 
-    <ion-item>
+    <!-- Descripción -->
+    <ion-item class="input-item">
       <ion-label position="stacked">Descripción</ion-label>
       <ion-textarea [(ngModel)]="parking.descripcion" name="descripcion" required></ion-textarea>
     </ion-item>
 
-    <ion-item>
+    <!-- Imagen (Opcional) -->
+    <ion-item class="input-item">
       <ion-label position="stacked">Imagen (Opcional)</ion-label>
       <input type="file" (change)="onImageSelected($event)" />
     </ion-item>
 
-    <ion-button expand="block" type="submit" color="primary">Publicar Estacionamiento</ion-button>
+    <!-- Botón Publicar -->
+    <ion-button expand="block" type="submit" color="primary" class="submit-btn">
+      Publicar Estacionamiento
+    </ion-button>
   </form>
 
-  <ion-list>
+  <!-- Lista de Estacionamientos -->
+  <ion-list class="parking-list">
     <ion-item *ngFor="let parking of parkings">
-      <ion-label>
+      <ion-label class="parking-details">
         <h2>{{ parking.nombre }}</h2>
         <p>{{ parking.tipo }} - {{ parking.disponibilidad }} - {{ parking.descripcion }}</p>
         <p *ngIf="parking.imageUrl">
-          <img [src]="parking.imageUrl" alt="Imagen del estacionamiento" style="max-width: 100%; height: auto;" />
+          <img [src]="parking.imageUrl" alt="Imagen del estacionamiento" class="parking-image" />
         </p>
         <p>ID: {{ parking.id }}</p> <!-- Para depuración -->
       </ion-label>

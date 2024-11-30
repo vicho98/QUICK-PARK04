@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, DocumentReference } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { AngularFireAuth } from '@angular/fire/compat/auth'; // Importamos AngularFireAuth
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable, from } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 
@@ -12,18 +12,16 @@ export class ParkingService {
   constructor(
     private firestore: AngularFirestore,
     private storage: AngularFireStorage,
-    private afAuth: AngularFireAuth // Inyectamos AngularFireAuth
+    private afAuth: AngularFireAuth
   ) {}
 
-  // Crear un estacionamiento con o sin imagen
   createParking(parking: any, imageFile: File | null): Observable<DocumentReference<unknown>> {
     return from(this.afAuth.currentUser).pipe(
       switchMap((user) => {
         if (!user) {
           throw new Error('Usuario no autenticado');
         }
-
-        parking.userId = user.uid; // Asociamos el estacionamiento al userId
+        parking.userId = user.uid;
         const parkingRef = this.firestore.collection('parking');
 
         if (imageFile) {
@@ -32,41 +30,31 @@ export class ParkingService {
           const task = this.storage.upload(filePath, imageFile);
 
           return from(task).pipe(
-            switchMap(() => fileRef.getDownloadURL()), // Obtener la URL de descarga de la imagen
+            switchMap(() => fileRef.getDownloadURL()),
             switchMap((imageUrl: string) => {
-              parking.imageUrl = imageUrl; // Agregar la URL de la imagen al estacionamiento
-              return parkingRef.add(parking); // Guardar el estacionamiento en Firestore
+              parking.imageUrl = imageUrl;
+              return parkingRef.add(parking);
             })
           );
         } else {
-          return from(parkingRef.add(parking)); // Guardar sin imagen
+          return from(parkingRef.add(parking));
         }
       })
     );
   }
 
-  // Obtener todos los estacionamientos
   getParkings(): Observable<any[]> {
-    return this.firestore
-      .collection('parking')
-      .snapshotChanges()
-      .pipe(
-        map((actions) =>
-          actions.map((a) => {
-            const data = a.payload.doc.data();
-            const id = a.payload.doc.id;
-            if (data && typeof data === 'object') {
-              return { id, ...data };
-            } else {
-              console.error('Error: El dato no es un objeto', data);
-              return { id };
-            }
-          })
-        )
-      );
+    return this.firestore.collection('parking').snapshotChanges().pipe(
+      map((actions) =>
+        actions.map((a) => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          return { id, ...(data && typeof data === 'object' ? data : {}) };
+        })
+      )
+    );
   }
 
-  // Obtener estacionamientos de un usuario específico
   getUserParkings(userId: string): Observable<any[]> {
     return this.firestore
       .collection('parking', (ref) => ref.where('userId', '==', userId))
@@ -76,20 +64,21 @@ export class ParkingService {
           actions.map((a) => {
             const data = a.payload.doc.data();
             const id = a.payload.doc.id;
-            if (data && typeof data === 'object') {
-              return { id, ...data };
-            } else {
-              console.error('Error: El dato no es un objeto', data);
-              return { id };
-            }
+            return { id, ...(data && typeof data === 'object' ? data : {}) };
           })
         )
       );
   }
 
-  // Eliminar un estacionamiento
   deleteParking(id: string): Observable<void> {
-    const docRef = this.firestore.collection('parking').doc(id);
-    return from(docRef.delete());
+    return from(this.firestore.collection('parking').doc(id).delete());
+  }
+
+  updateParkingAvailability(parkingId: string, isAvailable: boolean): Observable<void> {
+    return from(
+      this.firestore.collection('parking').doc(parkingId).update({
+        disponibilidad: isAvailable ? 'Disponible' : 'No disponible',
+      })
+    );
   }
 }

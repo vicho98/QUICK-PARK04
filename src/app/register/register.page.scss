@@ -1,25 +1,35 @@
+ion-content {
+  --background: transparent; /* Fondo transparente para evitar cualquier color de fondo por defecto */
+}
 .register-content {
-    --background: #f9f9f9; /* Fondo suave para la pantalla de registro */
-  }
-  
-  .register-container {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .input-item {
-    margin-bottom: 16px;
-  }
-  
-  .action-button {
-    margin-top: 20px;
-  }
-  
-  .header-title {
-    font-size: 1.4rem;
-    font-weight: bold;
-    text-align: center;
-  }
-  
+  background-image: url('/assets/icon/register.png') !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-attachment: fixed !important;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.register-container {
+  width: 100%;
+  max-width: 500px; /* Limita el ancho máximo para que no se vea demasiado extendido en pantallas grandes */
+  padding: 20px;
+}
+
+.register-card-title {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.input-item {
+  margin-bottom: 20px;
+}
+
+.action-button {
+  margin-top: 20px;
+}

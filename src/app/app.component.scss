@@ -1,0 +1,26 @@
+ion-menu {
+    --min-width: 250px; /* Ancho del menú */
+  }
+  
+  ion-content {
+    --background: #fff; /* Fondo blanco (si es necesario) */
+    padding: 0; /* Sin padding para el contenido */
+  }
+  
+  ion-list {
+    height: 100%;
+    max-height: calc(100vh - 56px); /* Ajustamos el alto para que sea visible el scroll */
+    overflow-y: auto; /* Permitimos que se haga scroll */
+  }
+  
+  ion-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  ion-footer ion-list {
+    position: relative;
+    padding-bottom: 20px; /* Espaciado en la parte inferior si es necesario */
+  }
+  

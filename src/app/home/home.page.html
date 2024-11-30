@@ -24,6 +24,23 @@
     <h1 class="welcome-message">¡Hola, conductor! 👋</h1>
     <p class="sub-message">Encuentra tu espacio de estacionamiento ideal con QuickPark.</p>
 
+    <!-- Lista de estacionamientos -->
+    <ion-list *ngIf="userParkings && userParkings.length > 0; else noParkings">
+      <ion-item *ngFor="let parking of userParkings">
+        <ion-label>
+          <h2>{{ parking.nombre }}</h2>
+          <p><strong>Disponibilidad:</strong> {{ parking.disponibilidad }}</p>
+        </ion-label>
+        <ion-button color="secondary" (click)="toggleAvailability(parking)">
+          {{ parking.disponibilidad === 'Disponible' ? 'Marcar No disponible' : 'Marcar Disponible' }}
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <ng-template #noParkings>
+      <p>No tienes estacionamientos registrados.</p>
+    </ng-template>
+
     <!-- Campo de búsqueda -->
     <ion-item lines="none" class="search-bar">
       <ion-icon slot="start" name="search-outline"></ion-icon>

@@ -1,7 +1,84 @@
-.color-preview {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    margin-top: 10px;
-  }
-  
+/* Fondo y espaciado general */
+.add-car-content {
+  background-color: #f4f6f9; /* Fondo suave gris claro */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Contenedor del formulario */
+.form-container {
+  max-width: 500px;
+  width: 100%;
+  background: #ffffff; /* Fondo blanco */
+  border-radius: 12px; /* Bordes redondeados */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  padding: 30px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Estilos para los inputs, selects y textareas */
+.input-item ion-input,
+.input-item ion-select {
+  --padding-start: 10px;
+  --border-radius: 10px; /* Bordes redondeados */
+  --background: #f9f9f9; /* Fondo suave */
+  --color: #333; /* Color de texto */
+  --border-color: #e0e0e0; /* Borde suave */
+  font-size: 1rem;
+}
+
+ion-label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #444;
+}
+
+/* Estilo del botón de guardar */
+.submit-btn {
+  background-color: #4CAF50; /* Verde para acción positiva */
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.submit-btn:hover {
+  background-color: #45a049; /* Color más oscuro al pasar el mouse */
+}
+
+/* Estilos para la lista de autos */
+.car-list {
+  width: 100%;
+  padding: 0;
+}
+
+.car-details h2 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.car-details p {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Estilo del botón eliminar */
+ion-button[color="danger"] {
+  margin-left: 10px;
+  font-size: 0.9rem;
+  color: #fff;
+  background-color: #f44336; /* Rojo para eliminar */
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+ion-button[color="danger"]:hover {
+  background-color: #e53935; /* Rojo oscuro al pasar el mouse */
+}
