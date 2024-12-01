@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button (click)="goHome()"></ion-back-button> <!-- Redirige al home -->
+    </ion-buttons>
     <ion-title>Pago Confirmado</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,8 +15,13 @@
 
     <ion-card-content>
       <p>Tu membresía ha sido activada con éxito. ¡Disfruta de los beneficios!</p>
+      <!-- Botón para volver al home -->
+      <ion-button expand="full" (click)="goHome()">Volver al inicio</ion-button>
     </ion-card-content>
   </ion-card>
 </ion-content>
+
+
+
 
 
