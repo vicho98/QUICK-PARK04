@@ -17,7 +17,7 @@
   <div class="welcome-container">
     <!-- Imagen de bienvenida -->
     <div class="photo-container">
-      <img src="assets/icon/autito-azul.png" alt="Bienvenido a QuickPark🚗" class="welcome-photo" />
+      <img src="assets/icon/home.png" alt="Bienvenido a QuickPark🚗" class="welcome-photo" />
     </div>
 
     <!-- Mensaje de bienvenida -->
@@ -31,14 +31,14 @@
           <h2>{{ parking.nombre }}</h2>
           <p><strong>Disponibilidad:</strong> {{ parking.disponibilidad }}</p>
         </ion-label>
-        <ion-button color="secondary" (click)="toggleAvailability(parking)">
+        <ion-button color="secondary" (click)="toggleAvailability(parking)" class="availability-toggle">
           {{ parking.disponibilidad === 'Disponible' ? 'Marcar No disponible' : 'Marcar Disponible' }}
         </ion-button>
       </ion-item>
     </ion-list>
 
     <ng-template #noParkings>
-      <p>No tienes estacionamientos registrados.</p>
+      <p class="no-parkings-message">No tienes estacionamientos registrados.</p>
     </ng-template>
 
     <!-- Campo de búsqueda -->
