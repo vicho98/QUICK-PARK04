@@ -5,30 +5,28 @@
 </ion-header>
 
 <ion-content>
+  <!-- Tarjeta principal de la membresía -->
   <ion-card>
+    <!-- Título de la tarjeta -->
     <ion-card-header>
-      <ion-card-title>Elige tu membresía</ion-card-title>
+      <ion-card-title>Obten tu membresía</ion-card-title>
     </ion-card-header>
 
+    <!-- Descripción de los beneficios de la membresía -->
     <ion-card-content>
-      <ion-item>
-        <ion-label>Nombre del titular</ion-label>
-        <ion-input [(ngModel)]="nombreTitular" placeholder="Ingresa tu nombre"></ion-input>
-      </ion-item>
+      <p>
+        Con membresía se le descuenta todo costo operativo total durante el mes un 30%.
+      </p>
+      <p>Otros beneficios:</p>
+      <ul>
+        <li>Notificaciones de estacionamientos cercanos.</li>
+        <li>Cancelación de reservas a último momento con cero costo adicional.</li>
+        <li>Priorización a reservas.</li>
+      </ul>
+      <p><strong>Costo:</strong> $5,000 CLP.</p>
 
-      <ion-item>
-        <ion-label>Tipo de membresía</ion-label>
-        <ion-select [(ngModel)]="tipoMembresia">
-          <ion-select-option value="basica">Básica</ion-select-option>
-          <ion-select-option value="premium">Premium</ion-select-option>
-        </ion-select>
-      </ion-item>
 
-      <ion-item>
-        <ion-label>Monto</ion-label>
-        <ion-input [value]="monto | currency:'CLP'" disabled></ion-input>
-      </ion-item>
-
+      <!-- Botón para procesar el pago -->
       <ion-button expand="full" (click)="procesarPago()">Pagar</ion-button>
     </ion-card-content>
   </ion-card>
