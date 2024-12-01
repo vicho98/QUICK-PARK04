@@ -16,9 +16,12 @@
       <p><strong>Dirección:</strong> {{ markerInfo?.address || 'Dirección no disponible' }}</p>
       <p><strong>Latitud:</strong> {{ markerInfo?.lat }}</p>
       <p><strong>Longitud:</strong> {{ markerInfo?.lng }}</p>
-      
     </ion-card-content>
   </ion-card>
 
+  <!-- Botón para reservar -->
+  <ion-button expand="full" color="primary" (click)="goToReservations()">Reservar</ion-button>
+
+  <!-- Botón para cerrar -->
   <ion-button expand="full" (click)="dismiss()">Cerrar</ion-button>
 </ion-content>

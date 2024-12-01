@@ -1,93 +1,112 @@
 /* Fondo y espaciado general */
 .parking-content {
-    background-color: #4b7dc8; /* Fondo suave gris claro */
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  /* Contenedor del formulario */
-  .form-container {
-    max-width: 500px;
-    width: 100%;
-    background: #2e3c85; /* Fondo blanco */
-    border-radius: 12px; /* Bordes redondeados */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    padding: 30px;
-    margin-bottom: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  /* Estilos para los inputs y selects */
-  .input-item ion-input,
-  .input-item ion-select,
-  .input-item ion-textarea {
-    --padding-start: 10px;
-    --border-radius: 10px; /* Bordes redondeados */
-    --background: #0f1a7b; /* Fondo suave */
-    --color: #333; /* Color de texto */
-    --border-color: #e0e0e0; /* Borde suave */
-    font-size: 1rem;
-  }
-  
-  ion-label {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #444;
-  }
-  
-  /* Estilo del botón de publicar */
-  .submit-btn {
-    background-color: #4CAF50; /* Verde para acción positiva */
-    color: white;
-    font-size: 1.1rem;
-    font-weight: 600;
-    padding: 12px;
-    border-radius: 8px;
-  }
-  
-  .submit-btn:hover {
-    background-color: #45a049; /* Color más oscuro al pasar el mouse */
-  }
-  
-  /* Estilos para la lista de estacionamientos */
-  .parking-list {
-    width: 100%;
-    padding: 0;
-  }
-  
-  .parking-details h2 {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .parking-details p {
-    font-size: 1rem;
-    color: #666;
-  }
-  
-  .parking-image {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-top: 15px;
-  }
-  
-  /* Estilo del botón eliminar */
-  ion-button[color="danger"] {
-    margin-left: 10px;
-    font-size: 0.9rem;
-    color: #fff;
-    background-color: #f44336; /* Rojo para eliminar */
-    border-radius: 6px;
-    font-weight: 600;
-  }
-  
-  ion-button[color="danger"]:hover {
-    background-color: #e53935; /* Rojo oscuro al pasar el mouse */
-  }
-  
+  background-color: #f2f6fc; /* Fondo azul claro */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Contenedor del formulario */
+.form-container {
+  max-width: 500px;
+  width: 100%;
+  background: #ffffff; /* Fondo blanco */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  padding: 30px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Espaciado entre elementos */
+  border: 1px solid #d1e0f1;
+}
+
+/* Estilos para los inputs y selects */
+.input-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Espacio entre la etiqueta y el campo */
+}
+
+.input-item ion-label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #4b7dc8; /* Azul principal */
+  margin-bottom: 5px; /* Asegura espacio debajo de la etiqueta */
+}
+
+.input-item ion-input,
+.input-item ion-select,
+.input-item ion-textarea {
+  --padding-start: 10px;
+  --border-radius: 8px; /* Bordes redondeados */
+  --background: #f9fbfd; /* Fondo claro */
+  --color: #333; /* Color del texto */
+  --border-color: #d1e0f1; /* Borde azul claro */
+  font-size: 1rem;
+  height: 44px; /* Altura fija para evitar solapamiento */
+}
+
+/* Ajuste del input al foco */
+.input-item ion-input:focus,
+.input-item ion-select:focus,
+.input-item ion-textarea:focus {
+  --border-color: #4b7dc8; /* Azul más intenso */
+  --box-shadow: 0 0 5px rgba(75, 125, 200, 0.3); /* Sombra en el enfoque */
+}
+
+/* Estilo del botón de acción */
+.submit-btn {
+  background-color: #4b7dc8; /* Azul moderno */
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 12px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #3b6bb0; /* Azul más oscuro */
+}
+
+/* Estilos para la lista de estacionamientos */
+.parking-list {
+  width: 100%;
+  padding: 0;
+}
+
+.parking-details h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.parking-details p {
+  font-size: 1rem;
+  color: #666;
+}
+
+.parking-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-top: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para las imágenes */
+}
+
+/* Estilo del botón eliminar */
+ion-button[color="danger"] {
+  font-size: 0.9rem;
+  color: #fff;
+  background-color: #e74c3c; /* Rojo moderno */
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+ion-button[color="danger"]:hover {
+  background-color: #c0392b; /* Rojo más oscuro */
+}

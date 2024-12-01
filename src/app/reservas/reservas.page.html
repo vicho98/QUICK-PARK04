@@ -5,6 +5,20 @@
 </ion-header>
 
 <ion-content>
+  <div *ngIf="markerInfo">
+    <ion-card>
+      <img [src]="markerInfo.photoUrl" alt="Foto del Estacionamiento"/>
+      <ion-card-header>
+        <ion-card-title>{{ markerInfo.title }}</ion-card-title>
+        <ion-card-subtitle>{{ markerInfo.owner }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{ markerInfo.description }}</p>
+        <p><strong>Dirección:</strong> {{ markerInfo.address }}</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
   <form [formGroup]="reservationForm" (ngSubmit)="submitReservation()">
     <ion-item>
       <ion-label>Tipo de Arriendo</ion-label>

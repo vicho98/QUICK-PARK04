@@ -18,24 +18,40 @@
   margin-bottom: 30px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px; /* Espaciado entre elementos */
 }
 
 /* Estilos para los inputs, selects y textareas */
+.input-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Espaciado entre la etiqueta y el campo */
+}
+
+.input-item ion-label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #4b7dc8; /* Azul principal */
+  margin-bottom: 5px; /* Espacio debajo de la etiqueta */
+}
+
 .input-item ion-input,
 .input-item ion-select {
   --padding-start: 10px;
   --border-radius: 10px; /* Bordes redondeados */
   --background: #f9f9f9; /* Fondo suave */
-  --color: #333; /* Color de texto */
+  --color: #333; /* Color del texto */
   --border-color: #e0e0e0; /* Borde suave */
   font-size: 1rem;
+  height: 44px; /* Altura fija para evitar solapamiento */
+  --padding-end: 10px;
 }
 
-ion-label {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #444;
+/* Ajuste al foco */
+.input-item ion-input:focus,
+.input-item ion-select:focus {
+  --border-color: #4CAF50; /* Verde más intenso */
+  --box-shadow: 0 0 5px rgba(76, 175, 80, 0.3); /* Sombra en el enfoque */
 }
 
 /* Estilo del botón de guardar */
@@ -46,6 +62,7 @@ ion-label {
   font-weight: 600;
   padding: 12px;
   border-radius: 8px;
+  transition: background-color 0.3s ease;
 }
 
 .submit-btn:hover {
@@ -62,6 +79,7 @@ ion-label {
   font-size: 1.3rem;
   font-weight: bold;
   color: #333;
+  margin-bottom: 5px;
 }
 
 .car-details p {
@@ -77,6 +95,7 @@ ion-button[color="danger"] {
   background-color: #f44336; /* Rojo para eliminar */
   border-radius: 6px;
   font-weight: 600;
+  transition: background-color 0.3s ease;
 }
 
 ion-button[color="danger"]:hover {

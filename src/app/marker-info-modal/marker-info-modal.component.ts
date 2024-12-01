@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-marker-info-modal',
@@ -19,10 +19,12 @@ export class MarkerInfoModalComponent {
     lng?: number;
   } | null = null;
 
-  constructor(private modalController: ModalController) {}
+  constructor(
+    private modalController: ModalController,
+    private navController: NavController  // Para redirigir a la página de reservas
+  ) {}
 
   ngOnInit() {
-    // Generar datos ficticios si no se proporcionan
     if (!this.markerInfo) {
       this.markerInfo = {
         title: 'Estacionamiento',
@@ -30,8 +32,8 @@ export class MarkerInfoModalComponent {
         owner: this.generateRandomOwner(),
         address: this.generateRandomAddress(),
         photoUrl: this.generateRandomPhoto(),
-        lat: this.lat, // Asignamos la latitud
-        lng: this.lng, // Asignamos la longitud
+        lat: this.lat,
+        lng: this.lng,
       };
     } else {
       this.markerInfo.lat = this.lat;
@@ -43,9 +45,16 @@ export class MarkerInfoModalComponent {
     this.modalController.dismiss();
   }
 
+  // Función para redirigir a la página de reservas con la información del marcador
+  goToReservations() {
+    this.navController.navigateForward('/reservas', {
+      state: { markerInfo: this.markerInfo }  // Pasamos la información del marcador al estado
+    });
+  }
+
   private generateRandomOwner(): string {
-    const firstNames = ['Juan', 'María', 'Carlos', 'Ana', 'Luis','Camilo'];
-    const lastNames = ['Pérez', 'Gómez', 'Rodríguez', 'López', 'Hernández','Barra'];
+    const firstNames = ['Juan', 'María', 'Carlos', 'Ana', 'Luis', 'Camilo'];
+    const lastNames = ['Pérez', 'Gómez', 'Rodríguez', 'López', 'Hernández', 'Barra'];
     const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
     const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
     return `${firstName} ${lastName}`;
@@ -65,8 +74,6 @@ export class MarkerInfoModalComponent {
       'https://loremflickr.com/400/200/cars',
       'https://loremflickr.com/400/200/vehicles',
     ];
-    
-    
     return photos[Math.floor(Math.random() * photos.length)];
   }
 }

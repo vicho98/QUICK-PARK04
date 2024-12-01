@@ -1,22 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { ToastController } from '@ionic/angular';
+import { ToastController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-reservas',
   templateUrl: './reservas.page.html',
   styleUrls: ['./reservas.page.scss'],
 })
-export class ReservasPage {
+export class ReservasPage implements OnInit {
   reservationForm: FormGroup;
+  markerInfo: any = {};  // Aquí almacenaremos la información del marcador
 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private navCtrl: NavController
   ) {
-    // Definición del formulario con validaciones
     this.reservationForm = this.fb.group({
       rentalType: ['', Validators.required],
       rentalDate: ['', Validators.required],
@@ -26,12 +27,19 @@ export class ReservasPage {
     });
   }
 
-  // Método para enviar la reserva
+  ngOnInit() {
+    // Obtener la información del marcador pasada desde el estado de la navegación
+    const state = history.state;
+    if (state && state.markerInfo) {
+      this.markerInfo = state.markerInfo;
+      console.log('Información del marcador recibida:', this.markerInfo);
+    }
+  }
+
   async submitReservation() {
     if (this.reservationForm.valid) {
       const formData = this.reservationForm.value;
 
-      // Intento de enviar la solicitud POST al servidor
       this.http.post('http://localhost:3000/api/send-email', formData).subscribe(
         async () => {
           const toast = await this.toastCtrl.create({
@@ -42,7 +50,6 @@ export class ReservasPage {
           await toast.present();
         },
         async (error) => {
-          console.error('Error al enviar la reserva:', error);
           const toast = await this.toastCtrl.create({
             message: 'Error al realizar la reserva.',
             duration: 3000,
