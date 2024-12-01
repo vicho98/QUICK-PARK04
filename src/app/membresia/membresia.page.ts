@@ -28,3 +28,4 @@ export class MembresiaPage {
     }, 2000); // 2 segundos de espera para simular el procesamiento
   }
 }
+

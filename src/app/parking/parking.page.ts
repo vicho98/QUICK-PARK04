@@ -14,7 +14,9 @@ export class ParkingPage implements OnInit {
     descripcion: '',
   };
   imageFile: File | null = null; // Manejar archivos opcionales
+  photo: string | null = null; // Foto tomada con la cámara
   parkings: any[] = []; // Lista de estacionamientos
+  URL = window.URL; // Declaración explícita de URL
 
   constructor(private parkingService: ParkingService) {}
 
@@ -57,6 +59,12 @@ export class ParkingPage implements OnInit {
     }
   }
 
+  // Tomar una foto (implementación de ejemplo)
+  takePhoto() {
+    // Aquí deberías implementar la lógica para abrir la cámara y tomar la foto.
+    this.photo = 'data:image/jpeg;base64,...'; // Simula una foto en base64.
+  }
+
   // Eliminar un estacionamiento
   deleteParking(id: string) {
     this.parkingService.deleteParking(id).subscribe(
@@ -79,5 +87,9 @@ export class ParkingPage implements OnInit {
       descripcion: '',
     };
     this.imageFile = null;
+    this.photo = null;
   }
 }
+
+
+

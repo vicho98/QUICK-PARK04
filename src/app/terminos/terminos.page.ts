@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-terminos',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TerminosPage implements OnInit {
 
-  constructor() { }
+  constructor(private navCtrl: NavController) { }
 
   ngOnInit() {
   }
 
+  // Método para manejar la acción de "volver"
+  goBack() {
+    this.navCtrl.back(); // Esto llevará a la página anterior
+  }
 }
