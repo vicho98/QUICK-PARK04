@@ -71,7 +71,7 @@ export class LoginPage implements OnInit {
   showToast(message: string) {
     this.toastCtrl.create({
       message: message,
-      duration: 5000
+      duration: 7000
     }).then(toastData => toastData.present());
   }
 }

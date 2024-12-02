@@ -20,8 +20,6 @@
       <ion-select [(ngModel)]="parking.tipo" name="tipo" placeholder="Selecciona un tipo">
         <ion-select-option value="Casa">Casa</ion-select-option>
         <ion-select-option value="Depto">Depto</ion-select-option>
-        <ion-select-option value="Calle">Calle</ion-select-option>
-        <ion-select-option value="Pasaje Cerrado">Pasaje Cerrado</ion-select-option>
       </ion-select>
     </ion-item>
 
@@ -38,20 +36,11 @@
       <ion-textarea [(ngModel)]="parking.descripcion" name="descripcion"></ion-textarea>
     </ion-item>
 
-    <!-- Botón para tomar una foto con la cámara -->
-    <ion-item>
-      <ion-button expand="full" (click)="takePhoto()">Tomar Foto</ion-button>
-    </ion-item>
 
     <!-- Botón para seleccionar una imagen desde la galería -->
     <ion-item>
       <ion-label position="stacked">Foto del Estacionamiento</ion-label>
       <input type="file" (change)="onImageSelected($event)" />
-    </ion-item>
-
-    <!-- Mostrar la foto seleccionada -->
-    <ion-item *ngIf="photo">
-      <img [src]="photo" alt="Foto seleccionada" style="width: 100%; height: auto;" />
     </ion-item>
 
     <!-- Mostrar la imagen seleccionada desde la galería -->
