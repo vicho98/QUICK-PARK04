@@ -51,7 +51,18 @@
       <ion-label>Correo</ion-label>
       <ion-input type="email" formControlName="email"></ion-input>
     </ion-item>
-
+    
+    <!-- Nota para campo requerido -->
+    <ion-note *ngIf="reservationForm.get('email')?.hasError('required') && reservationForm.get('email')?.touched" color="danger">
+      El correo es obligatorio.
+    </ion-note>
+    
+    <!-- Nota para formato de correo inválido -->
+    <ion-note *ngIf="reservationForm.get('email')?.hasError('email') && reservationForm.get('email')?.touched" color="danger">
+      Ingresa un correo válido.
+    </ion-note>
+    
+    
     <ion-button expand="block" type="submit">Reservar</ion-button>
   </form>
 </ion-content>

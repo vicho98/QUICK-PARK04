@@ -1,46 +1,87 @@
-require('dotenv').config();  // Cargar variables de entorno desde el archivo .env
 const express = require('express');
-const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
-const cors = require('cors');  // Para habilitar CORS
+const cors = require('cors');
+const nodemailer = require('nodemailer');
+require('dotenv').config();
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(bodyParser.json());
+// Middlewares
 app.use(cors());
+app.use(bodyParser.json());
 
-// Configuración del transportador con credenciales de Gmail desde el archivo .env
+// Configuración de transporte de Nodemailer
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.GMAIL_USER, // Usar variable de entorno
-    pass: process.env.GMAIL_PASS, // Usar contraseña de aplicación
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_PASS,
   },
 });
 
 // Ruta para enviar correos
 app.post('/api/send-email', (req, res) => {
-  const { rentalType, rentalDate, duration, name, email } = req.body;
+  try {
+    const { rentalType, rentalDate, duration, name, email, markerInfo } = req.body;
 
-  const mailOptions = {
-    from: process.env.GMAIL_USER, // Usar variable de entorno para el remitente
-    to: email,
-    subject: 'Confirmación de Reserva',
-    text: `Hola ${name},\n\nTu reserva de tipo ${rentalType} ha sido confirmada para el ${rentalDate} con una duración de ${duration}.\n\nGracias por usar nuestra app.`,
-  };
-
-  // Enviar el correo
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error('Error al enviar el correo:', error);
-      return res.status(500).send('Error al enviar el correo');
+    if (!rentalType || !rentalDate || !duration || !name || !email) {
+      return res.status(400).json({ success: false, message: 'Faltan datos requeridos en la solicitud.' });
     }
-    res.status(200).send('Correo enviado con éxito');
-  });
+
+    const markerDetails = markerInfo
+      ? `
+        <ul>
+          <li><strong>Título:</strong> ${markerInfo.title || 'No especificado'}</li>
+          <li><strong>Propietario:</strong> ${markerInfo.owner || 'No especificado'}</li>
+          <li><strong>Dirección:</strong> ${markerInfo.address || 'No especificado'}</li>
+          <li><strong>Descripción:</strong> ${markerInfo.description || 'No especificado'}</li>
+        </ul>
+      `
+      : '<p>Sin información adicional del estacionamiento.</p>';
+
+    const mailOptions = {
+      from: process.env.GMAIL_USER,
+      to: email,
+      subject: 'Confirmación de Reserva',
+      html: `
+        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+          <h2 style="color: #4CAF50; margin-bottom: 0.5em;">Confirmación de Reserva</h2>
+          <p>Hola <strong>${name}</strong>,</p>
+          <p>Tu reserva de tipo "<strong>${rentalType}</strong>" ha sido confirmada para el <strong>${rentalDate}</strong> con una duración de <strong>${duration}</strong>.</p>
+          <h3 style="margin-top: 1em;">Detalles del estacionamiento:</h3>
+          ${markerDetails}
+          <p style="margin-top: 1em;">Gracias por usar nuestra aplicación ! <strong>QuickPark</strong>.</p>
+          <p style="margin-top: 2em; font-size: 0.9em; color: #555;">Este es un mensaje generado automáticamente. Por favor, no respondas a este correo.</p>
+        </div>
+      `,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Error al enviar el correo:', error.message);
+        return res.status(500).json({
+          success: false,
+          message: 'Error al enviar el correo.',
+          error: error.message,
+        });
+      }
+      console.log('Correo enviado con éxito:', info.response);
+      return res.status(200).json({ success: true, message: 'Correo enviado con éxito.' });
+    });
+  } catch (error) {
+    console.error('Error en el servidor:', error.message);
+    if (!res.headersSent) {
+      res.status(500).json({
+        success: false,
+        message: 'Ocurrió un error en el servidor.',
+        error: error.message,
+      });
+    }
+  }
 });
 
-// Iniciar el servidor en el puerto 3000
-app.listen(3000, () => {
-  console.log('Servidor corriendo en http://localhost:3000');
+// Inicializar el servidor
+app.listen(PORT, () => {
+  console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
 });
