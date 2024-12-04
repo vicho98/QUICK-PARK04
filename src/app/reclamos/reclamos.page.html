@@ -8,20 +8,30 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="reclamo-form">
-    <ion-item>
-      <ion-label position="floating">Selecciona un Asunto</ion-label>
-      <ion-select [(ngModel)]="asunto" placeholder="Selecciona un asunto">
-        <ion-select-option *ngFor="let asunto of asuntos" [value]="asunto">{{ asunto }}</ion-select-option>
-      </ion-select>
-    </ion-item>
+  <div class="feedback-container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Envíanos tu Feedback</ion-card-title>
+      </ion-card-header>
 
-    <ion-item>
-      <ion-label position="floating">Escribe tu mensaje</ion-label>
-      <ion-textarea [(ngModel)]="mensaje" rows="6" placeholder="Tu mensaje..."></ion-textarea>
-    </ion-item>
+      <ion-card-content>
+        <!-- Selección de Asunto -->
+        <ion-item lines="full">
+          <ion-label position="floating">Selecciona un Asunto</ion-label>
+          <ion-select [(ngModel)]="asunto" placeholder="Selecciona un asunto">
+            <ion-select-option *ngFor="let asunto of asuntos" [value]="asunto">{{ asunto }}</ion-select-option>
+          </ion-select>
+        </ion-item>
 
-    <ion-button expand="full" color="primary" (click)="sendReclamo()">Enviar Reclamo</ion-button>
+        <!-- Mensaje de texto -->
+        <ion-item lines="full">
+          <ion-label position="floating">Escribe tu mensaje</ion-label>
+          <ion-textarea [(ngModel)]="mensaje" rows="6" placeholder="Tu mensaje..."></ion-textarea>
+        </ion-item>
+
+        <!-- Botón de Envío -->
+        <ion-button expand="full" color="primary" (click)="sendReclamo()">Enviar Reclamo</ion-button>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>
-
