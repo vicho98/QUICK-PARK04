@@ -21,14 +21,14 @@ export class AddPage implements OnInit {
 
   ngOnInit() {
     this.carService.getCars().subscribe((data) => {
-      this.cars = data;
+      this.cars = data; // Cargar los coches del usuario actual
     });
   }
 
   saveCar() {
     if (this.car.marca && this.car.modelo && this.car.patente && this.car.color) {
       this.carService.addCar(this.car).then(() => {
-        this.car = { marca: '', modelo: '', patente: '', tipo: '', color: '' };
+        this.car = { marca: '', modelo: '', patente: '', tipo: '', color: '' }; // Limpiar el formulario
       });
     }
   }
@@ -44,4 +44,3 @@ export class AddPage implements OnInit {
     this.car.color = color;
   }
 }
-

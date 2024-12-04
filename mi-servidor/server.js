@@ -40,23 +40,23 @@ app.post('/api/send-email', (req, res) => {
       `
       : '<p>Sin información adicional del estacionamiento.</p>';
 
-    const mailOptions = {
-      from: process.env.GMAIL_USER,
-      to: email,
-      subject: 'Confirmación de Reserva',
-      html: `
-        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-          <h2 style="color: #4CAF50; margin-bottom: 0.5em;">Confirmación de Reserva</h2>
-          <p>Hola <strong>${name}</strong>,</p>
-          <p>Tu reserva de tipo "<strong>${rentalType}</strong>" ha sido confirmada para el <strong>${rentalDate}</strong> con una duración de <strong>${duration}</strong>.</p>
-          <h3 style="margin-top: 1em;">Detalles del estacionamiento:</h3>
-          ${markerDetails}
-          <p style="margin-top: 1em;">Gracias por usar nuestra aplicación ! <strong>QuickPark</strong>.</p>
-          <p style="margin-top: 2em; font-size: 0.9em; color: #555;">Este es un mensaje generado automáticamente. Por favor, no respondas a este correo.</p>
-        </div>
-      `,
-    };
-
+      const mailOptions = {
+        from: process.env.GMAIL_USER,
+        to: email,
+        subject: 'Confirmación de Reserva',
+        html: `
+          <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+            <h2 style="color: #4CAF50; margin-bottom: 0.5em;">Confirmación de Reserva</h2>
+            <p>Hola <strong>${name}</strong>,</p>
+            <p>Tu reserva ha sido confirmada para el <strong>${rentalDate}</strong> con una duración de <strong>${duration} horas</strong>.</p>
+            <h3 style="margin-top: 1em;">Detalles del estacionamiento:</h3>
+            ${markerDetails}
+            <p style="margin-top: 1em;">Gracias por usar nuestra aplicación <strong>QuickPark</strong>.</p>
+            <p style="margin-top: 2em; font-size: 0.9em; color: #555;">Este es un mensaje generado automáticamente. Por favor, no respondas a este correo.</p>
+          </div>
+        `,
+      };
+      
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.error('Error al enviar el correo:', error.message);

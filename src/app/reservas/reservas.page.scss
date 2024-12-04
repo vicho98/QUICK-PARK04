@@ -5,4 +5,17 @@ ion-item.ng-invalid.ng-touched {
   ion-item.ng-valid.ng-touched {
     border: 1px solid green;
   }
+  .btn-container {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+  }
+  
+  ion-card {
+    margin-bottom: 1rem;
+  }
+  
+  ion-item {
+    margin-bottom: 0.5rem;
+  }
   
