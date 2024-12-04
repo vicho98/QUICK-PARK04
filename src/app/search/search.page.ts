@@ -101,14 +101,14 @@ export class SearchPage implements AfterViewInit {
     const circleIds = await this.map.addCircles([
       {
         center: { lat, lng },
-        radius: 3000,
+        radius: 1000,
         fillColor: '#008000',
         strokeColor: '#008000',
       },
     ]);
     this.circleId = circleIds[0];
 
-    const randomPoints = this.generateRandomPoints(lat, lng, 5, 3000);
+    const randomPoints = this.generateRandomPoints(lat, lng, 5, 1000);
 
     for (const point of randomPoints) {
       const randomMarkerIds = await this.map.addMarkers([
