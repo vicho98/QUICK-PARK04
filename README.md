@@ -26,9 +26,13 @@ Metodología Scrum: Trabajo ágil en equipo para garantizar la entrega increment
 El proyecto Quick Park está desarrollado por:
 
 Camilo Barra
+
 Christian Godoy
+
 Vicente Poveda
+
 Bastián Peñailillo
+
 Supervisado por el profesor Francisco Diaz.
 
 📌 Objetivo del proyecto
@@ -42,7 +46,7 @@ Clona este repositorio:
 
 bash
 Copy code
-git clone https://github.com/tu-repositorio/quick-park.git
+git clone https://github.com/vicho98/QUICK-PARK04
 
 Instala las dependencias:
 
